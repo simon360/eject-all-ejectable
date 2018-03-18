@@ -2,11 +2,15 @@
 
 A quick-and-hacky AppleScript to eject every disk that can be ejected.
 
+![Ejection success screenshot](/images/safe.png?raw=true)
+
 Written to make disconnecting a laptop easier. The idea: hit a keyboard shortcut, wait a couple of seconds, and safely unplug when told.
 
 This script will read every disk that Finder reports as "ejectable", and attempts to eject them. It offers configuration options to disable ejection for specific disks, and makes its actions clear in a simple dialog after it runs.
 
 It works well as a system-level service with a keyboard shortcut.
+
+![Ejection failure screenshot](/images/unsafe.png?raw=true)
 
 ## Usage
 
@@ -14,48 +18,11 @@ It works well as a system-level service with a keyboard shortcut.
 
 You can test it by opening `eject-all-ejectables.applescript` in Script Editor or [Script Debugger](https://latenightsw.com/) and hitting the ▶️ button.
 
-### Configurable settings
+### Using with Alfred
 
-At the top of the file are a number of configurable settings. You can change them as desired.
+![Alfred screenshot](/images/alfred.png?raw=true)
 
-#### Safe message
-
-**Name**: `safeMessage`
-
-**Purpose**: Specifies the title to show on the alert dialog when all ejectable disks were ejected.
-
-**Default**: `"Safe to disconnect"`
-
-#### Fail message
-
-**Name**: `failMessage`
-
-**Purpose**: Specifies the title to show on the alert dialog when one or more disks failed to eject.
-
-**Default**: `"Some disks did not eject"`
-
-#### Show skipped
-
-**Name**: `showSkipped`
-
-**Purpose**: Show a line in the alert dialog listing disks which were intentionally not ejected.
-
-**Default**: `false`
-
-#### Drives to skip
-
-**Name**: `drivesToSkip`
-
-**Purpose**: A list of disk names which should not be ejected, even if Finder reports that they're ejectable. This may be useful for network drives, SuperDrives, SD cards, or some internal drives.
-
-**Default**: `{}`
-
-**Examples**:
-
-```
-set drivesToSkip to {"External file storage"}
-set drivesToSkip to {"Some network location", "SDCARD"}
-```
+You can use this script with [Alfred](https://www.alfredapp.com/), simply by keeping the `eject-all-ejectable.applescript` file somewhere on your device, and enabling `AppleScripts` under Alfred Preferences -> Features -> Default Results.
 
 ### Adding as a service
 
@@ -97,3 +64,46 @@ end run
 15. Press `⌃⌘⌥E` (or whichever keyboard combination) you selected. Your disks should eject, and an alert should appear.
 
 Obviously, this is not ideal.
+
+## Configurable settings
+
+At the top of the file are a number of configurable settings. You can change them as desired.
+
+#### Safe message
+
+**Name**: `safeMessage`
+
+**Purpose**: Specifies the title to show on the alert dialog when all ejectable disks were ejected.
+
+**Default**: `"Safe to disconnect"`
+
+#### Fail message
+
+**Name**: `failMessage`
+
+**Purpose**: Specifies the title to show on the alert dialog when one or more disks failed to eject.
+
+**Default**: `"Some disks did not eject"`
+
+#### Show skipped
+
+**Name**: `showSkipped`
+
+**Purpose**: Show a line in the alert dialog listing disks which were intentionally not ejected.
+
+**Default**: `false`
+
+#### Drives to skip
+
+**Name**: `drivesToSkip`
+
+**Purpose**: A list of disk names which should not be ejected, even if Finder reports that they're ejectable. This may be useful for network drives, SuperDrives, SD cards, or some internal drives.
+
+**Default**: `{}`
+
+**Examples**:
+
+```
+set drivesToSkip to {"External file storage"}
+set drivesToSkip to {"Some network location", "SDCARD"}
+```
